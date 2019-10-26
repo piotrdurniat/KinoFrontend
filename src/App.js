@@ -13,43 +13,47 @@ import useStyles from "./components/Styles.js";
 import ConsecutiveSnackbar from "./components/ConsecutiveSnackbar";
 // material ui
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Paper from "@material-ui/core/Paper";
 import { createMuiTheme } from "@material-ui/core/styles";
 import grey from "@material-ui/core/colors/grey";
 import blue from "@material-ui/core/colors/blue";
-import { ThemeProvider } from "@material-ui/styles";
+import red from "@material-ui/core/colors/red";
 
-const theme = createMuiTheme({
-  palette: {
-    primary: blue,
-    secondary: grey
-  }
-});
+import { ThemeProvider } from "@material-ui/styles";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const App = props => {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const theme = createMuiTheme({
+    palette: {
+      type: prefersDarkMode ? 'dark' : 'light',
+      primary: blue,
+      secondary: red
+    }
+  });
+
   const classes = useStyles();
   const alertQueue = React.useRef([]); // useRef( <this thing becomes .current> )
-    const [alertOpen, setAlertOpen] = React.useState(false);
-    const [alertMessage, setAlertMessage] = React.useState(null);
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState(null);
 
-    const processQueue = () => {
-      if (alertQueue.current.length > 0) {
-        setAlertMessage(alertQueue.current.shift());
-        setAlertOpen(true);
-      }
-    };
+  const processQueue = () => {
+    if (alertQueue.current.length > 0) {
+      setAlertMessage(alertQueue.current.shift());
+      setAlertOpen(true);
+    }
+  };
 
-    const showAlert = message => {
-      alertQueue.current.push({
-        message,
-        key: new Date().getTime()
-      });
-      if (alertOpen) {
-        setAlertOpen(false);
-      } else {
-        processQueue();
-      }
-    };
+  const showAlert = message => {
+    alertQueue.current.push({
+      message,
+      key: new Date().getTime()
+    });
+    if (alertOpen) {
+      setAlertOpen(false);
+    } else {
+      processQueue();
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -62,13 +66,13 @@ const App = props => {
             <div className={classes.toolbar} />
 
             <ConsecutiveSnackbar
-            alertQueue={alertQueue}
-            showAlert={showAlert}
-            open={alertOpen}
-            setOpen={setAlertOpen}
-            processQueue={processQueue}
-            messageInfo={alertMessage}
-          />
+              alertQueue={alertQueue}
+              showAlert={showAlert}
+              open={alertOpen}
+              setOpen={setAlertOpen}
+              processQueue={processQueue}
+              messageInfo={alertMessage}
+            />
 
             <Switch>
               <Route
@@ -76,7 +80,10 @@ const App = props => {
                 path="/"
                 render={() => <Redirect to="/mail/inbox" />}
               />
-              <Route path="/mail/inbox" render={() => <Inbox showAlert={showAlert}/>} />
+              <Route
+                path="/mail/inbox"
+                render={() => <Inbox showAlert={showAlert} />}
+              />
               <Route path="/mail/starred" component={Starred} />
               <Route path="/search/:phrase" component={Search} />
               <Route path="*" component={NotFound} />
@@ -86,6 +93,6 @@ const App = props => {
       </BrowserRouter>
     </ThemeProvider>
   );
-}
+};
 
 export default App;

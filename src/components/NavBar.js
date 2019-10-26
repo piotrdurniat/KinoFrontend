@@ -49,7 +49,7 @@ const NavBar = props => {
           <MenuIcon />
         </IconButton>
         <Typography className={classes.title} variant="h6" noWrap>
-          Material design app
+          Kino Solvro
         </Typography>
         <div className={classes.search}>
           <div className={classes.searchIcon}>

@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     [theme.breakpoints.up("sm")]: { // for desktop
       width: 120,
-      "&:focus": { // make input larger on focus
+      "&:focus": { // make input wider on focus
         width: 200
       }
     }

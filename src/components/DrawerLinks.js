@@ -1,12 +1,11 @@
 import React from "react";
 
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import StarIcon from "@material-ui/icons/Star";
-import SnoozeIcon from "@material-ui/icons/AccessTime";
-import LabelImportantIcon from "@material-ui/icons/LabelImportant";
-import SendIcon from "@material-ui/icons/Send";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import LabelIcon from "@material-ui/icons/Label";
+import InfoIcon from "@material-ui/icons/Info";
+import TheatersIcon from "@material-ui/icons/Theaters";
+import EventIcon from "@material-ui/icons/Event";
+import ForumIcon from "@material-ui/icons/Forum";
+import LocalOfferIcon from "@material-ui/icons/LocalOffer";
+import MovieIcon from "@material-ui/icons/Movie";
 
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -17,39 +16,34 @@ import { Link } from "react-router-dom";
 
 const items = [
   {
-    icon: InboxIcon,
-    text: "Inbox",
-    link: "/mail/inbox"
+    icon: InfoIcon,
+    text: "O kinie",
+    link: "o_kinie"
   },
   {
-    icon: StarIcon,
-    text: "Starred",
-    link: "/mail/starred"
+    icon: TheatersIcon,
+    text: "Repertuar",
+    link: "/repertuar"
   },
   {
-    icon: SnoozeIcon,
-    text: "Snoozed",
-    link: "/mail/snoozed"
+    icon: EventIcon,
+    text: "Wydarzenia",
+    link: "/wydarzenia"
   },
   {
-    icon: LabelImportantIcon,
-    text: "Important",
-    link: "/mail/important"
+    icon: ForumIcon,
+    text: "Forum",
+    link: "/forum"
   },
   {
-    icon: SendIcon,
-    text: "Sent",
-    link: "/mail/sent"
+    icon: LocalOfferIcon,
+    text: "Promocje",
+    link: "/promocje"
   },
   {
-    icon: DraftsIcon,
-    text: "Drafts",
-    link: "/mail/drafts"
-  },
-  {
-    icon: LabelIcon,
-    text: "Categories",
-    link: "/mail/categories"
+    icon: MovieIcon,
+    text: "Newsy",
+    link: "/newsy"
   }
 ];
 
