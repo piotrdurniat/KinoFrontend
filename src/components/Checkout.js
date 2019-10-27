@@ -19,13 +19,14 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
 // Forms
-import AddressForm from "./AddressForm";
+import ContactDetailsForm from "./ContactDetailsForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import ChooseSeat from "./ChooseSeat";
 import OrderConfirmation from "./OrderConfirmation";
+import HandleApiCall from "./HandleApiCall";
 
-function Copyright() {
+const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
@@ -36,7 +37,7 @@ function Copyright() {
       {"."}
     </Typography>
   );
-}
+};
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -87,26 +88,25 @@ const steps = [
   "Podsumowanie"
 ];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <ChooseSeat />;
-    case 1:
-      return <AddressForm />;
-    case 2:
-      return <PaymentForm />;
-    case 3:
-      return <Review />;
-    default:
-      throw new Error("Unknown step");
-  }
-}
+export default ({ match }) => {
+  const time = match.params.time;
 
-export default function Checkout() {
   const theme = useTheme();
-
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [selectedSeats, setSelectedSeats] = React.useState([]);
+  const [contactDetails, setContactDetails] = React.useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: ""
+  });
+  const [paymentDetails, setPaymentDetails] = React.useState({
+    cardName: "",
+    cardNumber: "",
+    expDate: "",
+    cvv: ""
+  });
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -171,52 +171,101 @@ export default function Checkout() {
     </div>
   );
 
+  const renderFunction = result => {
+    const getStepContent = step => {
+      switch (step) {
+        case 0:
+          return (
+            <ChooseSeat
+              selectedSeats={selectedSeats}
+              setSelectedSeats={setSelectedSeats}
+              movieData={result}
+              time={time}
+            />
+          );
+        case 1:
+          return (
+            <ContactDetailsForm
+              contactDetails={contactDetails}
+              setContactDetails={setContactDetails}
+            />
+          );
+        case 2:
+          return (
+            <PaymentForm
+              paymentDetails={paymentDetails}
+              setPaymentDetails={setPaymentDetails}
+            />
+          );
+        case 3:
+          return (
+            <Review
+              selectedSeats={selectedSeats}
+              contactDetails={contactDetails}
+              paymentDetails={paymentDetails}
+            />
+          );
+        default:
+          throw new Error("Unknown step");
+      }
+    };
+
+    return (
+      <>
+        <CssBaseline />
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <Typography
+              component="h1"
+              variant="h4"
+              align="center"
+              className={classes.title}
+            >
+              Rezerwacja miejsc
+            </Typography>
+
+            {/*  Visible for desktop */}
+            <Hidden xsDown implementation="js">
+              <Stepper activeStep={activeStep} className={classes.stepper}>
+                {steps.map(label => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+            </Hidden>
+
+            {activeStep === steps.length ? (
+              <OrderConfirmation />
+            ) : (
+              <form onSubmit={handleSubmit}>
+                {getStepContent(activeStep)}
+
+                {/*  Visible for desktop */}
+                <Hidden xsDown implementation="js">
+                  <StepperButtonsDesktop />
+                </Hidden>
+
+                {/* Visible for mobile devices */}
+                <Hidden smUp implementation="js">
+                  <StepperButtonsMobile />
+                </Hidden>
+              </form>
+            )}
+          </Paper>
+          <Copyright />
+        </main>
+      </>
+    );
+  };
+
   return (
-    <>
-      <CssBaseline />
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography
-            component="h1"
-            variant="h4"
-            align="center"
-            className={classes.title}
-          >
-            Rezerwacja miejsc
-          </Typography>
-
-          {/*  Visible for desktop */}
-          <Hidden xsDown implementation="js">
-            <Stepper activeStep={activeStep} className={classes.stepper}>
-              {steps.map(label => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Hidden>
-
-          {activeStep === steps.length ? (
-            <OrderConfirmation />
-          ) : (
-            <form onSubmit={handleSubmit}>
-
-              {getStepContent(activeStep)}
-
-              {/*  Visible for desktop */}
-              <Hidden xsDown implementation="js">
-                <StepperButtonsDesktop />
-              </Hidden>
-
-              {/* Visible for mobile devices */}
-              <Hidden smUp implementation="js">
-                <StepperButtonsMobile />
-              </Hidden>
-            </form>
-          )}
-        </Paper>
-        <Copyright />
-      </main>
-    </>
+    <HandleApiCall
+      data={{
+        movie: "78483421"
+      }}
+      url="http://localhost:5000/movie"
+      renderFunction={renderFunction}
+    />
   );
-}
+};

@@ -12,6 +12,7 @@ import Paper from "@material-ui/core/Paper";
 
 // custom components
 import SeatGrid from "./SeatGrid";
+import { ticketTypes, ticketPrices } from "./tickets.js";
 
 const useStyles = makeStyles(theme => ({
   alignCenter: {
@@ -37,36 +38,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-const tickets = [
-  {
-    type: "Normalny",
-    price: 15.99
-  },
-  {
-    type: "Dziecko",
-    price: 14.9
-  },
-  {
-    type: "Student",
-    price: 14.9
-  },
-  {
-    type: "Uczeń",
-    price: 14.9
-  },
-  {
-    type: "Senior",
-    price: 14.9
-  }
-];
-
 const ChooseSeat = props => {
+  const {movieData} = props;
   const classes = useStyles();
-  const [selectedSeats, setSelectedSeats] = React.useState([]);
+  const { selectedSeats, setSelectedSeats, time } = props;
+  const timeFormatted = new Intl.DateTimeFormat("pl", {
+    timeZone: "Europe/Warsaw",
+    weekday: "long",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric"
+  }).format(time * 1000);
 
   const addSeat = (row, num) => {
-    const seat = { row, num, type: tickets[0].type };
+    const seat = { row, num, type: ticketTypes[0] };
     // const seat = { row, num };
 
     setSelectedSeats([...selectedSeats, seat]);
@@ -89,16 +76,17 @@ const ChooseSeat = props => {
   return (
     <>
       <Typography align="center" variant="h5" className={classes.movieTitle}>
-        Wojownicy Solvro, Więzień KNSI
+        {movieData.title}
       </Typography>
       <Typography align="center" variant="body2" className={classes.movieDate}>
-        sobota, 26 października, godz. 12:30, sala 4
+        {timeFormatted}, sala 4
       </Typography>
 
       <SeatGrid
         selectedSeats={selectedSeats}
         addSeat={addSeat}
         removeSeat={removeSeat}
+        movieData={movieData}
       />
 
       {selectedSeats.length > 0 ? (
@@ -156,9 +144,9 @@ const TicketSelectionInput = props => {
         )
       }}
     >
-      {tickets.map(t => (
-        <MenuItem key={t.type} value={t.type}>
-          {t.type}: {t.price} zł
+      {ticketTypes.map(t => (
+        <MenuItem key={t} value={t}>
+          {t}: {ticketPrices[t]} zł
         </MenuItem>
       ))}
     </TextField>

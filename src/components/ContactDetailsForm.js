@@ -5,11 +5,24 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 
-export default function AddressForm() {
+export default props => {
+  const { contactDetails, setContactDetails } = props;
+
+  const handleChange = event => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    setContactDetails({
+      ...contactDetails,
+      [name]: value
+    });
+  };
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Dane osobowe
+        Dane kontaktowe
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
@@ -18,6 +31,8 @@ export default function AddressForm() {
             id="firstName"
             name="firstName"
             label="Imie"
+            value={contactDetails.firstName}
+            onChange={handleChange}
             fullWidth
             autoComplete="fname"
           />
@@ -28,6 +43,8 @@ export default function AddressForm() {
             id="lastName"
             name="lastName"
             label="Nazwisko"
+            value={contactDetails.lastName}
+            onChange={handleChange}
             fullWidth
             autoComplete="lname"
           />
@@ -39,6 +56,8 @@ export default function AddressForm() {
             id="email"
             name="email"
             label="Adres e-mail"
+            value={contactDetails.email}
+            onChange={handleChange}
             fullWidth
             autoComplete="email"
           />
@@ -48,6 +67,8 @@ export default function AddressForm() {
             id="phone"
             name="phone"
             label="Phone number"
+            value={contactDetails.phone}
+            onChange={handleChange}
             fullWidth
             autoComplete="tel"
           />
@@ -55,4 +76,4 @@ export default function AddressForm() {
       </Grid>
     </React.Fragment>
   );
-}
+};

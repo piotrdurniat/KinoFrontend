@@ -8,25 +8,13 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
 
-const products = [
-  { name: "Miejsce A2 ", desc: "Normalny", price: "$9.99" },
-  { name: "Miejsce F3", desc: "Student", price: "$3.45" },
-  { name: "Miejsce G7", desc: "Uczeń", price: "$6.51" },
-  { name: "Miejsce R4", desc: "Uczeń", price: "$14.11" },
-  { name: "Dostawa", desc: "", price: "Free" }
-];
-const addresses = [
-  "1 Material-UI Drive",
-  "Reactville",
-  "Anytown",
-  "99999",
-  "USA"
-];
+// custom components
+import { ticketPrices } from "./tickets";
+
 const payments = [
-  { name: "Typ karty", detail: "Visa" },
-  { name: "Posiadacz karty", detail: "Mr John Smith" },
-  { name: "Numer karty", detail: "xxxx-xxxx-xxxx-1234" },
-  { name: "Data wygaśnięcia", detail: "04/2024" }
+  { name: "cardName", label: "Posiadacz karty" },
+  { name: "cardNumber", label: "Numer karty" },
+  { name: "expDate", label: "Data wygaśnięcia" }
 ];
 
 const useStyles = makeStyles(theme => ({
@@ -41,8 +29,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Review() {
+export default props => {
   const classes = useStyles();
+
+  const { selectedSeats, contactDetails, paymentDetails } = props;
 
   return (
     <React.Fragment>
@@ -50,26 +40,40 @@ export default function Review() {
         Podsumowanie zamówienia
       </Typography>
       <List disablePadding>
-        {products.map(product => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+        {selectedSeats.map(product => (
+          <ListItem
+            className={classes.listItem}
+            key={product.row + product.num}
+          >
+            <ListItemText
+              primary={product.row + product.num}
+              secondary={product.type}
+            />
+            <Typography variant="body2">
+              {ticketPrices[product.type]}
+            </Typography>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
           <ListItemText primary="Suma" />
           <Typography variant="subtitle1" className={classes.total}>
-            $34.06
+            {selectedSeats.reduce(
+              (previous, current) => previous + ticketPrices[current.type],
+              0
+            )}
           </Typography>
         </ListItem>
       </List>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Dostawa
+            Dane kontaktowe
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(", ")}</Typography>
+          <Typography gutterBottom>
+            {contactDetails.firstName} {contactDetails.lastName}
+          </Typography>
+          <Typography gutterBottom>{contactDetails.email}</Typography>
+          <Typography gutterBottom>{contactDetails.phone}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
@@ -79,10 +83,12 @@ export default function Review() {
             {payments.map(payment => (
               <React.Fragment key={payment.name}>
                 <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
+                  <Typography gutterBottom>{payment.label}</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
+                  <Typography gutterBottom>
+                    {paymentDetails[payment.name]}
+                  </Typography>
                 </Grid>
               </React.Fragment>
             ))}
@@ -91,4 +97,4 @@ export default function Review() {
       </Grid>
     </React.Fragment>
   );
-}
+};

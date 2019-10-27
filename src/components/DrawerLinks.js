@@ -17,7 +17,7 @@ const items = [
   {
     icon: InfoIcon,
     text: "O kinie",
-    link: "o_kinie"
+    link: "/o_kinie"
   },
   {
     icon: TheatersIcon,

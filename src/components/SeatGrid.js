@@ -7,10 +7,10 @@ import Paper from "@material-ui/core/Paper";
 
 // custom components
 import SeatButton from "./SeatButton";
-import movieData from "./MovieData";
 import useStyles from "./SeatGridStyles.js";
 
 const SeatGrid = props => {
+  const {movieData} = props;
   const classes = useStyles();
   const seats = movieData.arrangement;
 
@@ -33,11 +33,12 @@ const SeatGrid = props => {
             return (
               <Grid item key={seatNum}>
                 <SeatButton
-                  number={seatNum}
+                  num={seatNum}
                   row={row}
                   occupied={seat[seatNum]}
                   addSeat={props.addSeat}
                   removeSeat={props.removeSeat}
+                  selectedSeats={props.selectedSeats}
                 />
               </Grid>
             );

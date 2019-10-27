@@ -47,25 +47,23 @@ const App = props => {
 
           <div className={classes.content}>
             <div className={classes.toolbar} />
-            <div className={classes.routePaper}>
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={() => <Redirect to="/repertuar"></Redirect>}
-                />
-                <Route path="/o_kinie" component={About} />
-                <Route path="/repertuar" component={Showtimes} />
-                <Route path="/wydarzenia" component={Events} />
-                <Route path="/forum" component={Forum} />
-                <Route path="/newsy" component={News} />
-                <Route path="/promocje" component={Showtimes} />
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => <Redirect to="/repertuar"></Redirect>}
+              />
+              <Route path="/o_kinie" component={About} />
+              <Route path="/repertuar" component={Showtimes} />
+              <Route path="/wydarzenia" component={Events} />
+              <Route path="/forum" component={Forum} />
+              <Route path="/newsy" component={News} />
+              <Route path="/promocje" component={Showtimes} />
+              <Route path="/checkout/:time" component={Checkout} />
 
-                <Route path="/search/:phrase" component={Search} />
-                <Route path="*" component={NotFound} />
-              </Switch>
-            </div>
-            <Route path="/checkout" component={Checkout} />
+              <Route path="/search/:phrase" component={Search} />
+              <Route path="*" component={NotFound} />
+            </Switch>
           </div>
         </div>
       </BrowserRouter>

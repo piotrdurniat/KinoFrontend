@@ -4,7 +4,6 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 // material ui
 import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import DateFnsUtils from "@date-io/date-fns";
 import {
@@ -15,16 +14,26 @@ import {
 // custom components
 import MovieCard from "../components/MovieCard";
 import Checkout from "../components/Checkout";
+import HandleApiCall from "../components/HandleApiCall";
 
 const useStyles = makeStyles(theme => ({
-  progress: {
-    margin: theme.spacing(2)
+  content: {
+    margin: "auto",
+    padding: theme.spacing(2),
+    maxWidth: 1300,
+    [theme.breakpoints.up(600 + 230 + theme.spacing(3) * 2)]: {
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+      padding: theme.spacing(3)
+    }
   }
 }));
 
 export default props => {
+  const classes = useStyles();
+
   const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2019.06.24")
+    new Date(1561372200000)
   );
 
   const renderFunction = result => {
@@ -48,78 +57,34 @@ export default props => {
     return <Typography variant="h6">Brak dostępnych seansów</Typography>;
   };
 
-  const data = {
-    movie: "78483421"
-  };
-
   const handleDateChange = date => {
     setSelectedDate(date);
   };
   let match = useRouteMatch();
 
   return (
-    <Switch>
-      <Route path={`${match.path}/checkout`}>
-        <Checkout />
-      </Route>
-      {/*Default route*/}
-      <Route path={match.path}>
-        <Typography variant="h3">Repertuar</Typography>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
-            margin="normal"
-            id="date-picker-dialog"
-            label="Wybierz dzień seansu"
-            format="dd.MM.yyyy"
-            value={selectedDate}
-            onChange={handleDateChange}
-            KeyboardButtonProps={{
-              "aria-label": "change date"
-            }}
-          />
-        </MuiPickersUtilsProvider>
-        <HandleApiCall
-          data={data}
-          url="http://localhost:5000/movie"
-          renderFunction={renderFunction}
+    <div className={classes.content}>
+      <Typography variant="h3">Repertuar</Typography>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          margin="normal"
+          id="date-picker-dialog"
+          label="Wybierz dzień seansu"
+          format="dd.MM.yyyy"
+          value={selectedDate}
+          onChange={handleDateChange}
+          KeyboardButtonProps={{
+            "aria-label": "change date"
+          }}
         />
-      </Route>
-    </Switch>
+      </MuiPickersUtilsProvider>
+      <HandleApiCall
+        data={{
+          movie: "78483421"
+        }}
+        url="http://localhost:5000/movie"
+        renderFunction={renderFunction}
+      />
+    </div>
   );
-};
-
-const HandleApiCall = props => {
-  const classes = useStyles();
-  const [state, setState] = React.useState({
-    error: null,
-    isLoaded: false,
-    result: null
-  });
-
-  React.useEffect(() => {
-    fetch(props.url, {
-      method: "POST", // or 'PUT'
-      body: JSON.stringify(props.data), // data can be `string` or {object}!
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => res.json())
-      .then(result => {
-        setState({ isLoaded: true, result: result });
-      })
-      .catch(error => {
-        setState({ isLoaded: true, error: error });
-      });
-  });
-
-  const { error, isLoaded } = state;
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <CircularProgress className={classes.progress} />;
-  } else {
-    let result = state.result;
-    return props.renderFunction(result);
-  }
 };

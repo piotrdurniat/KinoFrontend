@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect, Link } from "react-router-dom";
 
 // material ui
 import Grid from "@material-ui/core/Grid";
@@ -14,23 +15,26 @@ const useStyles = makeStyles(theme => ({
 export default props => {
   const classes = useStyles();
 
-  const handleCheckout = event => {};
-
   return (
     <Grid container justify="space-evenly">
       {props.showTimes.map(time => {
-        const hours = time.getHours();
-        const minutes = time.getMinutes();
+        const timeFormatted = new Intl.DateTimeFormat("pl", {
+          timeZone: "Europe/Warsaw",
+          hour: "numeric",
+          minute: "numeric"
+        }).format(time);
+
         return (
-          <Grid item key={hours + " " + minutes}>
+          <Grid item key={timeFormatted}>
             <Fab
+              component={Link}
+              to={"/checkout/" + time.getTime()/1000}
               variant="extended"
               size="small"
               aria-label="add"
               className={classes.button}
-              onClick={handleCheckout}
             >
-              {hours + ":" + minutes}
+              {timeFormatted}
             </Fab>
           </Grid>
         );
