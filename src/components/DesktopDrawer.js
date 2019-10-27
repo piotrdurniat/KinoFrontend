@@ -1,7 +1,10 @@
 import React from "react";
-import DrawerLinks from "./DrawerLinks";
+
+// material ui
 import Drawer from "@material-ui/core/Drawer";
 
+// custom components
+import DrawerLinks from "./DrawerLinks";
 import useStyles from "./Styles.js";
 
 const DesktopDrawer = props => {

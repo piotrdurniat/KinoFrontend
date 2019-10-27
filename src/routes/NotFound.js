@@ -1,7 +1,6 @@
 import React from "react";
+import Typography from "@material-ui/core/Typography"
 
-const NotFound = props => {
-  return <h1>404 Not found</h1>;
+export default props => {
+  return <Typography variant="h4">404 Not found</Typography>;
 };
-
-export default NotFound;

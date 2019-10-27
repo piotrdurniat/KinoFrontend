@@ -1,42 +1,20 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
-import red from "@material-ui/core/colors/red";
 
-const mobileR = 26;
-const desktopR = 34;
+// material ui
+import Button from "@material-ui/core/Button";
+
+//custom components
+import useStyles from "./SeatGridStyles.js"
 
 const SeatButton = props => {
   const [selected, setSelected] = React.useState(false);
 
-  const useStyles = makeStyles(theme => ({
-    squareButton: {
-      minWidth: mobileR,
-      minHeight: mobileR,
-      maxWidth: mobileR,
-      maxHeight: mobileR,
-      padding: 0,
-      margin: theme.spacing(0.2),
-      textAlign: "center",
-      size: "large",
-      fontSize: mobileR / 2,
-      [theme.breakpoints.up("sm")]: {
-        // For desktop
-        margin: theme.spacing(0.5),
-        minWidth: desktopR,
-        maxWidth: desktopR,
-        minHeight: desktopR,
-        maxHeight: desktopR,
-        fontSize: desktopR / 2
-      }
-    }
-  }));
-
   const classes = useStyles();
 
-  const toggleSelect = event => {
+  const toggle = event => {
+    if (selected) props.removeSeat(props.row, props.number);
+    else props.addSeat(props.row, props.number);
     setSelected(!selected);
-    console.log(selected);
   };
 
   if (props.occupied === 1) {
@@ -50,7 +28,7 @@ const SeatButton = props => {
     <Button
       variant="contained"
       color={selected ? "secondary" : "primary"}
-      onClick={toggleSelect}
+      onClick={toggle}
       className={classes.squareButton}
     >
       {props.number}

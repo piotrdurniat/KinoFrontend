@@ -1,18 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
+// material ui
 import InfoIcon from "@material-ui/icons/Info";
 import TheatersIcon from "@material-ui/icons/Theaters";
 import EventIcon from "@material-ui/icons/Event";
 import ForumIcon from "@material-ui/icons/Forum";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import MovieIcon from "@material-ui/icons/Movie";
-
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-
-import { Link } from "react-router-dom";
 
 const items = [
   {
@@ -49,16 +48,16 @@ const items = [
 
 const DrawerLinks = () => {
   return (
-      <List>
-        {items.map((item, index) => (
-          <ListItem button component={Link} to={item.link} key={index}>
-            <ListItemIcon>
-              <item.icon />
-            </ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
-      </List>
+    <List>
+      {items.map((item, index) => (
+        <ListItem button component={Link} to={item.link} key={index}>
+          <ListItemIcon>
+            <item.icon />
+          </ListItemIcon>
+          <ListItemText primary={item.text} />
+        </ListItem>
+      ))}
+    </List>
   );
 };
 

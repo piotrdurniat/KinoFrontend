@@ -1,59 +1,42 @@
 // react components
 import React from "react";
-import { Redirect, BrowserRouter, Switch, Route } from "react-router-dom";
-import "typeface-roboto";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+
 // routes
-import Inbox from "./routes/Inbox";
-import Starred from "./routes/Starred";
-import NotFound from "./routes/NotFound";
+import Checkout from "./components/Checkout";
 import Search from "./routes/Search";
-// my components
+import NotFound from "./routes/NotFound";
+import About from "./routes/About";
+import Showtimes from "./routes/Showtimes";
+import Events from "./routes/Events";
+import Forum from "./routes/Forum";
+import News from "./routes/News";
+
+// components
 import ResponsiveDrawer from "./components/ResponsiveDrawer";
 import useStyles from "./components/Styles.js";
-import ConsecutiveSnackbar from "./components/ConsecutiveSnackbar";
+
 // material ui
+import "typeface-roboto";
+
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme } from "@material-ui/core/styles";
-import grey from "@material-ui/core/colors/grey";
 import blue from "@material-ui/core/colors/blue";
 import red from "@material-ui/core/colors/red";
-
 import { ThemeProvider } from "@material-ui/styles";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const App = props => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const theme = createMuiTheme({
     palette: {
-      type: prefersDarkMode ? 'dark' : 'light',
+      type: prefersDarkMode ? "dark" : "light",
       primary: blue,
       secondary: red
     }
   });
 
   const classes = useStyles();
-  const alertQueue = React.useRef([]); // useRef( <this thing becomes .current> )
-  const [alertOpen, setAlertOpen] = React.useState(false);
-  const [alertMessage, setAlertMessage] = React.useState(null);
-
-  const processQueue = () => {
-    if (alertQueue.current.length > 0) {
-      setAlertMessage(alertQueue.current.shift());
-      setAlertOpen(true);
-    }
-  };
-
-  const showAlert = message => {
-    alertQueue.current.push({
-      message,
-      key: new Date().getTime()
-    });
-    if (alertOpen) {
-      setAlertOpen(false);
-    } else {
-      processQueue();
-    }
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -64,30 +47,25 @@ const App = props => {
 
           <div className={classes.content}>
             <div className={classes.toolbar} />
+            <div className={classes.routePaper}>
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={() => <Redirect to="/repertuar"></Redirect>}
+                />
+                <Route path="/o_kinie" component={About} />
+                <Route path="/repertuar" component={Showtimes} />
+                <Route path="/wydarzenia" component={Events} />
+                <Route path="/forum" component={Forum} />
+                <Route path="/newsy" component={News} />
+                <Route path="/promocje" component={Showtimes} />
 
-            <ConsecutiveSnackbar
-              alertQueue={alertQueue}
-              showAlert={showAlert}
-              open={alertOpen}
-              setOpen={setAlertOpen}
-              processQueue={processQueue}
-              messageInfo={alertMessage}
-            />
-
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={() => <Redirect to="/mail/inbox" />}
-              />
-              <Route
-                path="/mail/inbox"
-                render={() => <Inbox showAlert={showAlert} />}
-              />
-              <Route path="/mail/starred" component={Starred} />
-              <Route path="/search/:phrase" component={Search} />
-              <Route path="*" component={NotFound} />
-            </Switch>
+                <Route path="/search/:phrase" component={Search} />
+                <Route path="*" component={NotFound} />
+              </Switch>
+            </div>
+            <Route path="/checkout" component={Checkout} />
           </div>
         </div>
       </BrowserRouter>

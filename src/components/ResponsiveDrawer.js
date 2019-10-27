@@ -1,8 +1,9 @@
-// Based on:
-// https://medium.com/@tsubasakondo_36683/create-responsive-drawer-menu-with-react-material-ui-617a42764b69
-
 import React from "react";
+
+// material ui
 import Hidden from "@material-ui/core/Hidden";
+
+// custom components
 import useStyles from "./Styles.js";
 import MobileDrawer from "./MobileDrawer";
 import DesktopDrawer from "./DesktopDrawer";

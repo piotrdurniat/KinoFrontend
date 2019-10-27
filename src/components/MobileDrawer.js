@@ -1,7 +1,11 @@
 import React from "react";
+
+// material ui
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import DrawerLinks from "./DrawerLinks";
 import { useTheme } from "@material-ui/core/styles";
+
+// custom components
+import DrawerLinks from "./DrawerLinks";
 import useStyles from "./Styles";
 
 const MobileDrawer = props => {

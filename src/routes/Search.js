@@ -1,8 +1,7 @@
 import React from "react";
+import Typography from "@material-ui/core/Typography";
 
-const Search = ({ match }) => {
+export default ({ match }) => {
   const phrase = match.params.phrase;
-  return <h1>Search results for: {phrase}</h1>;
+  return <Typography variant="h4">Search results for: {phrase}</Typography>;
 };
-
-export default Search;

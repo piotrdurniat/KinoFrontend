@@ -1,4 +1,6 @@
 import React from "react";
+
+// material ui
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import IconButton from "@material-ui/core/IconButton";
@@ -9,13 +11,13 @@ const UserMenu = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  function handleMenu(event) {
+  const handleMenu = event => {
     setAnchorEl(event.currentTarget);
-  }
+  };
 
-  function handleClose() {
+  const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
 
   return (
     <div>
@@ -48,7 +50,6 @@ const UserMenu = props => {
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
             <MenuItem onClick={handleClose}>Sign out</MenuItem>
-
           </Menu>
         </div>
       )}
