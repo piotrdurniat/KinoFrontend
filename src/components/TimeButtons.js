@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // material ui
 import Grid from "@material-ui/core/Grid";

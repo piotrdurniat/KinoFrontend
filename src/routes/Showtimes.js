@@ -1,6 +1,5 @@
 // react
 import React from "react";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 // material ui
 import Typography from "@material-ui/core/Typography";
@@ -13,7 +12,6 @@ import {
 
 // custom components
 import MovieCard from "../components/MovieCard";
-import Checkout from "../components/Checkout";
 import HandleApiCall from "../components/HandleApiCall";
 
 const useStyles = makeStyles(theme => ({
@@ -60,7 +58,6 @@ export default props => {
   const handleDateChange = date => {
     setSelectedDate(date);
   };
-  let match = useRouteMatch();
 
   return (
     <div className={classes.content}>

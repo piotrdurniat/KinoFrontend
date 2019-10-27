@@ -2,7 +2,6 @@
 import React from "react";
 
 // material ui
-import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
