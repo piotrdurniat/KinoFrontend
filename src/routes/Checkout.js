@@ -19,12 +19,12 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
 // Forms
-import ContactDetailsForm from "./ContactDetailsForm";
-import PaymentForm from "./PaymentForm";
-import Review from "./Review";
-import ChooseSeat from "./ChooseSeat";
-import OrderConfirmation from "./OrderConfirmation";
-import HandleApiCall from "./HandleApiCall";
+import ContactDetailsForm from "../components/ContactDetailsForm";
+import PaymentForm from "../components/PaymentForm";
+import Review from "../components/Review";
+import ChooseSeat from "../components/ChooseSeat";
+import OrderConfirmation from "../components/OrderConfirmation";
+import HandleApiCall from "../components/HandleApiCall";
 
 const Copyright = () => {
   return (

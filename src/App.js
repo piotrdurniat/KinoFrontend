@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 // routes
-import Checkout from "./components/Checkout";
+import Checkout from "./routes/Checkout";
 import Search from "./routes/Search";
 import NotFound from "./routes/NotFound";
 import About from "./routes/About";
