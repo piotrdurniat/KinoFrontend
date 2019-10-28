@@ -118,7 +118,7 @@ export default ({ match }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    handleNext();
+    if (selectedSeats.length > 0) handleNext();
   };
 
   const StepperButtonsDesktop = props => (
@@ -203,6 +203,8 @@ export default ({ match }) => {
               selectedSeats={selectedSeats}
               contactDetails={contactDetails}
               paymentDetails={paymentDetails}
+              movieData={result}
+              time={time}
             />
           );
         default:

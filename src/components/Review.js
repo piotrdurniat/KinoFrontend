@@ -32,12 +32,28 @@ const useStyles = makeStyles(theme => ({
 export default props => {
   const classes = useStyles();
 
+  const {movieData, time} = props;
+  const timeFormatted = new Intl.DateTimeFormat("pl", {
+    timeZone: "Europe/Warsaw",
+    weekday: "long",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric"
+  }).format(time * 1000);
   const { selectedSeats, contactDetails, paymentDetails } = props;
 
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Podsumowanie zamówienia
+      </Typography>
+      <Typography variant="body1">
+        {movieData.title}
+      </Typography>
+      <Typography variant="body2">
+        {timeFormatted}, sala 4
       </Typography>
       <List disablePadding>
         {selectedSeats.map(product => (
