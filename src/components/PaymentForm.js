@@ -13,8 +13,9 @@ export default props => {
     let value = target.value;
     const name = target.name;
 
-    if (name === "cardNumber" || name === "cvv")
+    if (name === "cardNumber")
       value = value.replace(/\D/g, "");
+    if (name === "cvv") value = value.replace(/\D/g, "").slice(0, 3);
     if (name === "expDate") value = value.replace(/[^\d.]/g, "");
 
     setPaymentDetails({
