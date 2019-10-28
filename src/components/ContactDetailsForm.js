@@ -10,8 +10,10 @@ export default props => {
 
   const handleChange = event => {
     const target = event.target;
-    const value = target.value;
+    let value = target.value;
     const name = target.name;
+
+    if (name === "phone") value = value.replace(/\D/g, "");
 
     setContactDetails({
       ...contactDetails,
@@ -62,7 +64,6 @@ export default props => {
             autoComplete="email"
           />
           <TextField
-            type="tel"
             required
             id="phone"
             name="phone"

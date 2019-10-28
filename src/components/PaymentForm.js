@@ -10,14 +10,19 @@ export default props => {
 
   const handleChange = event => {
     const target = event.target;
-    const value = target.value;
+    let value = target.value;
     const name = target.name;
+
+    if (name === "cardNumber" || name === "cvv")
+      value = value.replace(/\D/g, "");
+    if (name === "expDate") value = value.replace(/[^\d.]/g, "");
 
     setPaymentDetails({
       ...paymentDetails,
       [name]: value
     });
   };
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -40,6 +45,7 @@ export default props => {
             required
             id="cardNumber"
             name="cardNumber"
+            pattern="[0-9]{10}"
             value={paymentDetails.cardNumber}
             onChange={handleChange}
             label="Numer karty"
@@ -59,7 +65,6 @@ export default props => {
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
-            type="number"
             required
             id="cvv"
             name="cvv"

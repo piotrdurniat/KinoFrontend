@@ -24,6 +24,8 @@ import PaymentForm from "../components/PaymentForm";
 import Review from "../components/Review";
 import ChooseSeat from "../components/ChooseSeat";
 import OrderConfirmation from "../components/OrderConfirmation";
+
+// custom omponents
 import HandleApiCall from "../components/HandleApiCall";
 
 const Copyright = () => {
